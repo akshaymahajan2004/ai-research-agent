@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from google import genai
-
+from agent.planner import create_research_plan
 # Load Environment variables :
 
 load_dotenv()
@@ -11,32 +11,21 @@ load_dotenv()
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
-
-def ask_ai(question):
-    try:
-        response = client.interactions.create(
-            model="Gemini-3.5-flash-lite",
-            input=question
-        )
-
-        return response.output_text
-
-    except Exception as e:
-        return f"Something went wrong: {e}"
-
-
+model = "gemini-3.5-flash-lite"
 
 
 def main():
     print("🤖 AI Research Agent")
     print("--------------------")
     
-    question = input("what would you like to ask? ")
+    topic = input("Enter your research topic:  ")
 
-    answer = ask_ai(question)
+    print("\nGenerating your research plan...\n")
 
-    print("\nAI Response:")
-    print(answer)
+    plan = create_research_plan(client,model,topic)
+
+    print("===== RESEARCH PLAN =====")
+    print(plan)
 
 if __name__ == "__main__":
     main()
