@@ -19,9 +19,9 @@ def create_research_plan(client,model,topic):
     5. Return the result as a numbered list.
     """
 
-    response = client.interactions.create(
+    response = client.models.generate_content(
         model=model,
-        input=prompt
+        contents=prompt
     )
 
-    return response.output_text
+    return response.text
