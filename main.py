@@ -2,11 +2,13 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from agent.planner import create_research_plan
-# Load Environment variables :
+from agent.researcher import conduct_research
+
+# Step 1: Load Environment variables :
 
 load_dotenv()
 
-# connect to OpenAI :
+# Step 2: connect to OpenAI :
 
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
@@ -18,14 +20,23 @@ def main():
     print("🤖 AI Research Agent")
     print("--------------------")
     
-    topic = input("Enter your research topic:  ")
+    # Step 3: Get research topic
 
-    print("\nGenerating your research plan...\n")
+    topic = input("Enter your research topic  ")
 
-    plan = create_research_plan(client,model,topic)
+    print("\nGenerating your research plan..\n")
+
+    # Step 4: Generate Research Plan
+    research_plan = create_research_plan(client,model,topic)
 
     print("===== RESEARCH PLAN =====")
-    print(plan)
+    print(research_plan)
+
+    # Step 5: Conduct research according to planning
+
+    print("\nResearching the topic using Google Search...\n")
+
+    research_results = conduct_research(client,model,research_plan)
 
 if __name__ == "__main__":
     main()
