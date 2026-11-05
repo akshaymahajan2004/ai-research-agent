@@ -20,23 +20,31 @@ def main():
     print("🤖 AI Research Agent")
     print("--------------------")
     
-    # Step 3: Get research topic
+    try:
+        # Step 3: Get research topic
 
-    topic = input("Enter your research topic  ")
 
-    print("\nGenerating your research plan..\n")
+        topic = input("Enter your research topic  ")
 
-    # Step 4: Generate Research Plan
-    research_plan = create_research_plan(client,model,topic)
+        print("\nGenerating your research plan..\n")
 
-    print("===== RESEARCH PLAN =====")
-    print(research_plan)
+        # Step 4: Generate Research Plan
+        research_plan = create_research_plan(client,model,topic)
 
-    # Step 5: Conduct research according to planning
+        print("===== RESEARCH PLAN =====")
+        print(research_plan)
 
-    print("\nResearching the topic using Google Search...\n")
+        # Step 5: Conduct research according to planning
 
-    research_results = conduct_research(client,model,research_plan)
+        print("\nResearching the topic using Google Search...\n")
+
+        research_results = conduct_research(client,model,research_plan)
+
+        print("===== RESEARCH FINDINGS =====")
+        print(research_results)
+
+    except Exception as e:
+        return f"Something went wrong: {e}"
 
 if __name__ == "__main__":
     main()
